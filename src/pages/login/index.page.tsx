@@ -1,6 +1,10 @@
+import { GetServerSideProps } from 'next'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
+import { getServerSession } from 'next-auth/next'
 
+import { authOptions } from '@/pages/api/auth/[...nextauth].api'
 import {
   ImageContainer,
   LoginContainer,
@@ -16,6 +20,10 @@ import rocketLaunchSvg from '@/assets/rocket-launch.svg'
 
 export default function Login() {
   const router = useRouter()
+
+  async function handleSignIn(provider: 'google' | 'github') {
+    await signIn(provider)
+  }
 
   async function handleAccessAsGuest() {
     await router.push('/')
@@ -41,7 +49,7 @@ export default function Login() {
           </Greetings>
 
           <LoginOptions>
-            <button>
+            <button onClick={() => handleSignIn('google')}>
               <Image src={googleSvg} alt="Google Logo" width={32} height={32} />
               Entrar com Google
             </button>
@@ -63,4 +71,23 @@ export default function Login() {
       </LoginBox>
     </LoginContainer>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(req, res, authOptions)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
 }

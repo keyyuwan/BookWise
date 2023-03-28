@@ -1,6 +1,7 @@
 import Image from 'next/legacy/image'
 import Link from 'next/link'
 import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
+import { useSession, signOut } from 'next-auth/react'
 
 import { Avatar } from '../Avatar'
 import {
@@ -15,7 +16,9 @@ import {
 import logoImg from '@/assets/logo.svg'
 
 export function Sidebar() {
-  const isAuthenticated = false
+  const { status } = useSession()
+
+  const isAuthenticated = status === 'authenticated'
 
   return (
     <SidebarContainer>
@@ -62,7 +65,7 @@ export function Sidebar() {
         <LogoutContainer>
           <Avatar src="https://github.com/keyyuwan.png" alt="" size="small" />
           <span>Key</span>
-          <button>
+          <button onClick={() => signOut()}>
             <SignOut weight="bold" color="#f75a68" />
           </button>
         </LogoutContainer>
