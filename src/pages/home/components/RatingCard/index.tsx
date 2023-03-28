@@ -30,7 +30,7 @@ export function RatingCard() {
     <RatingCardContainer isFullCard={isFullTextVisible}>
       <RatingCardHeader>
         <RatingCardRater>
-          <Avatar src="https://github.com/keyyuwan.png" alt="" />
+          <Avatar src="https://github.com/keyyuwan.png" alt="" size="medium" />
 
           <div>
             <span>Key Yu Wan</span>

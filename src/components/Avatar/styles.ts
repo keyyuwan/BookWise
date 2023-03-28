@@ -4,12 +4,24 @@ import * as Avatar from '@radix-ui/react-avatar'
 export const AvatarContainer = styled(Avatar.Root, {
   borderRadius: '$full',
   display: 'inline-block',
-  width: 40,
-  height: 40,
   overflow: 'hidden',
 
   background: 'linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%)',
   border: '1px solid transparent',
+
+  variants: {
+    size: {
+      small: {
+        width: 32,
+        height: 32,
+      },
+
+      medium: {
+        width: 40,
+        height: 40,
+      },
+    },
+  },
 })
 
 export const AvatarImage = styled(Avatar.Image, {

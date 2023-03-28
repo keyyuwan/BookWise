@@ -99,3 +99,26 @@ export const Login = styled(Link, {
     color: '$green100',
   },
 })
+
+export const LogoutContainer = styled('div', {
+  marginTop: 'auto',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$3',
+
+  span: {
+    fontSize: '$sm',
+    color: '$gray200',
+  },
+
+  button: {
+    all: 'unset',
+    cursor: 'pointer',
+    lineHeight: 0,
+
+    svg: {
+      height: '$7',
+      width: '$7',
+    },
+  },
+})
