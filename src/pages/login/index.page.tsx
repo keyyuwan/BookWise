@@ -53,7 +53,7 @@ export default function Login() {
               <Image src={googleSvg} alt="Google Logo" width={32} height={32} />
               Entrar com Google
             </button>
-            <button>
+            <button onClick={() => handleSignIn('github')}>
               <Image src={githubSvg} alt="Google Logo" width={32} height={32} />
               Entrar com Github
             </button>
