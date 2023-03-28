@@ -1,4 +1,6 @@
 import Image from 'next/legacy/image'
+import { useRouter } from 'next/router'
+
 import {
   ImageContainer,
   LoginContainer,
@@ -13,6 +15,12 @@ import githubSvg from '@/assets/github.svg'
 import rocketLaunchSvg from '@/assets/rocket-launch.svg'
 
 export default function Login() {
+  const router = useRouter()
+
+  async function handleAccessAsGuest() {
+    await router.push('/')
+  }
+
   return (
     <LoginContainer>
       <ImageContainer>
@@ -41,7 +49,7 @@ export default function Login() {
               <Image src={githubSvg} alt="Google Logo" width={32} height={32} />
               Entrar com Github
             </button>
-            <button>
+            <button onClick={handleAccessAsGuest}>
               <Image
                 src={rocketLaunchSvg}
                 alt="Google Logo"
