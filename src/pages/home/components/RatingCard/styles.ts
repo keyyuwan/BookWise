@@ -8,18 +8,20 @@ export const RatingCardContainer = styled('div', {
   border: '2px solid transparent',
   transition: '.2s',
 
+  height: 280,
+
   '&:hover': {
     borderColor: '$gray500',
     backgroundColor: '$gray600',
   },
 
-  variants: {
-    isFullCard: {
-      true: {},
+  // variants: {
+  //   isFullCard: {
+  //     true: {},
 
-      false: { height: 280 },
-    },
-  },
+  //     false: { height: 280 },
+  //   },
+  // },
 })
 
 export const RatingCardHeader = styled('div', {
@@ -53,7 +55,7 @@ export const RatingCardContent = styled('div', {
   gap: '$5',
 
   div: {
-    height: 152,
+    height: '100%',
 
     strong: {
       lineHeight: '$short',
@@ -70,6 +72,11 @@ export const RatingCardContent = styled('div', {
       color: '$gray300',
       fontSize: '$sm',
       lineHeight: '$base',
+
+      overflow: 'hidden',
+      display: '-webkit-box',
+      '-webkit-line-clamp': 4,
+      '-webkit-box-orient': 'vertical',
     },
 
     button: {
@@ -80,26 +87,26 @@ export const RatingCardContent = styled('div', {
     },
   },
 
-  variants: {
-    isFullCard: {
-      true: {
-        div: {
-          height: '100%',
-        },
-      },
+  // variants: {
+  //   isFullCard: {
+  //     true: {
+  //       div: {
+  //         height: '100%',
+  //       },
+  //     },
 
-      false: {
-        div: {
-          p: {
-            overflow: 'hidden',
-            display: '-webkit-box',
-            '-webkit-line-clamp': 3,
-            '-webkit-box-orient': 'vertical',
-          },
-        },
-      },
-    },
-  },
+  //     false: {
+  //       div: {
+  //         p: {
+  //           overflow: 'hidden',
+  //           display: '-webkit-box',
+  //           '-webkit-line-clamp': 3,
+  //           '-webkit-box-orient': 'vertical',
+  //         },
+  //       },
+  //     },
+  //   },
+  // },
 })
 
 export const RatingCardBookData = styled('div', {})
