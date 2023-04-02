@@ -1,11 +1,20 @@
-import { BookOpen, BookmarkSimple, Books, User, UserList } from 'phosphor-react'
+import {
+  BookOpen,
+  BookmarkSimple,
+  Books,
+  CaretLeft,
+  User,
+  UserList,
+} from 'phosphor-react'
 import Image from 'next/legacy/image'
+import { useRouter } from 'next/router'
 
 import { MainLayout } from '@/layouts/MainLayout'
 import { PageTitle } from '@/components/PageTitle'
 import { Search } from '@/components/Search'
 import { Rating } from '@/components/Rating'
 import { Avatar } from '@/components/Avatar'
+import { Link } from '@/components/Link'
 import {
   BookInfo,
   BookRatedCard,
@@ -50,9 +59,27 @@ const BOOKS: Book[] = [
 ]
 
 export default function Profile() {
+  const isUserAuth = false
+  const router = useRouter()
+
+  function handleGoBack() {
+    router.back()
+  }
+
   return (
     <MainLayout>
-      <PageTitle icon={<User size={32} weight="bold" />} title="Perfil" />
+      {isUserAuth ? (
+        <PageTitle icon={<User size={32} weight="bold" />} title="Perfil" />
+      ) : (
+        <Link
+          isIconBeforeTitle
+          title="Voltar"
+          Icon={CaretLeft}
+          size="medium"
+          color="white"
+          onClick={handleGoBack}
+        />
+      )}
 
       <ProfileContainer>
         <BooksSection>

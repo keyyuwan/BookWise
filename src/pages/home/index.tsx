@@ -1,9 +1,9 @@
-import Link from 'next/link'
 import { CaretRight, ChartLineUp } from 'phosphor-react'
 
 import { MainLayout } from '@/layouts/MainLayout'
 import { PageTitle } from '@/components/PageTitle'
 import { BookCard } from '@/components/BookCard'
+import { Link } from '@/components/Link'
 import { RatingCard } from './components/RatingCard'
 import { LastReadCard } from './components/LastReadCard'
 import {
@@ -32,10 +32,14 @@ export default function Home() {
             <UserLastRead>
               <UserLastReadHeader>
                 <span>Sua última leitura</span>
-                <Link href="/profile">
-                  Ver todas
-                  <CaretRight size={16} />
-                </Link>
+
+                <Link
+                  href="/profile"
+                  title="Ver todas"
+                  Icon={CaretRight}
+                  size="small"
+                  color="purple"
+                />
               </UserLastReadHeader>
 
               <UserLastReadList>
@@ -58,10 +62,14 @@ export default function Home() {
         <PopularBooks>
           <PopularBooksHeader>
             <span>Livros populares</span>
-            <Link href="/explore">
-              Ver todos
-              <CaretRight size={16} />
-            </Link>
+
+            <Link
+              href="/explore"
+              title="Ver todos"
+              Icon={CaretRight}
+              size="small"
+              color="purple"
+            />
           </PopularBooksHeader>
 
           <PopularBooksList>

@@ -29,17 +29,6 @@ export const UserLastReadHeader = styled('div', {
   span: {
     fontSize: '$sm',
   },
-
-  a: {
-    whiteSpace: 'nowrap',
-    fontSize: '$sm',
-    color: '$purple100',
-    fontWeight: '$bold',
-    textDecoration: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '$2',
-  },
 })
 
 export const UserLastReadList = styled('section', {
