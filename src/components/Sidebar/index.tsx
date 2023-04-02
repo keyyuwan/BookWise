@@ -1,24 +1,24 @@
 import Image from 'next/legacy/image'
-import Link from 'next/link'
 import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
 import { useSession, signOut } from 'next-auth/react'
 
 import { Avatar } from '../Avatar'
+import { NavItem } from './NavItem'
 import {
   Login,
   LogoContainer,
   LogoutContainer,
   Navigation,
-  NavItem,
   SidebarContainer,
 } from './styles'
 
 import logoImg from '@/assets/logo.svg'
 
 export function Sidebar() {
-  const { status } = useSession()
+  const { status, data } = useSession()
 
   const isAuthenticated = status === 'authenticated'
+  const userFirstName = data?.user?.name?.split(' ')[0]
 
   return (
     <SidebarContainer>
@@ -33,38 +33,22 @@ export function Sidebar() {
       </LogoContainer>
 
       <Navigation>
-        <NavItem isActive>
-          <Link href="/">
-            <div>
-              <ChartLineUp size={24} weight="bold" />
-              <span>Início</span>
-            </div>
-          </Link>
-        </NavItem>
-        <NavItem isActive={false}>
-          <Link href="/explore">
-            <div>
-              <Binoculars size={24} weight="bold" />
-              <span>Explorar</span>
-            </div>
-          </Link>
-        </NavItem>
+        <NavItem Icon={ChartLineUp} title="Início" href="/" />
+        <NavItem Icon={Binoculars} title="Explorar" href="/explore" />
+
         {isAuthenticated && (
-          <NavItem isActive={false}>
-            <Link href="/profile">
-              <div>
-                <User size={24} weight="bold" />
-                <span>Perfil</span>
-              </div>
-            </Link>
-          </NavItem>
+          <NavItem Icon={User} title="Perfil" href="/profile" />
         )}
       </Navigation>
 
       {isAuthenticated ? (
         <LogoutContainer>
-          <Avatar src="https://github.com/keyyuwan.png" alt="" size="small" />
-          <span>Key</span>
+          <Avatar
+            src={data?.user?.avatar_url || undefined}
+            alt=""
+            size="small"
+          />
+          <span>{userFirstName}</span>
           <button onClick={() => signOut()}>
             <SignOut weight="bold" color="#f75a68" />
           </button>
