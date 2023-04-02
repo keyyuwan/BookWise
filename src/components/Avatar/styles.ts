@@ -20,6 +20,11 @@ export const AvatarContainer = styled(Avatar.Root, {
         width: 40,
         height: 40,
       },
+
+      large: {
+        width: 72,
+        height: 72,
+      },
     },
   },
 })
