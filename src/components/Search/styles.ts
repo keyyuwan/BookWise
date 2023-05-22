@@ -1,7 +1,6 @@
 import { styled } from '@/styles/stitches.config'
 
 export const SearchContainer = styled('label', {
-  width: '100%',
   display: 'flex',
   alignItems: 'center',
   position: 'relative',

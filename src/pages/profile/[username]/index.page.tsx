@@ -59,7 +59,7 @@ const BOOKS: Book[] = [
 ]
 
 export default function Profile() {
-  const isUserAuth = false
+  const isUserAuth = true
   const router = useRouter()
 
   function handleGoBack() {
@@ -83,7 +83,7 @@ export default function Profile() {
 
       <ProfileContainer>
         <BooksSection>
-          <Search />
+          <Search placeholder="Buscar livro avaliado" />
 
           <BooksRated>
             {BOOKS.map((book) => (
