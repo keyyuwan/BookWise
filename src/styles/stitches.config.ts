@@ -7,7 +7,7 @@ export const { styled, getCssText, globalCss, keyframes, config } =
   createStitches({
     theme: {
       fonts: {
-        default: 'Nunito, sans-serif',
+        default: 'Nunito Sans, sans-serif',
       },
 
       space: {

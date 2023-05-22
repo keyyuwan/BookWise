@@ -2,15 +2,11 @@ import { Binoculars } from 'phosphor-react'
 
 import { MainLayout } from '@/layouts/MainLayout'
 import { PageTitle } from '@/components/PageTitle'
-import {
-  Drawer,
-  DrawerTrigger,
-  DrawerContent,
-  DrawerClose,
-} from '@/components/Drawer'
+import { Drawer, DrawerTrigger, DrawerContent } from '@/components/Drawer'
 import { Search } from '@/components/Search'
 import { Category } from './components/Category'
 import { Book } from './components/Book'
+import { BookDetails } from './components/BookDetails'
 
 import { BooksWrapper, CategoriesWrapper, ExploreHeader } from './styles'
 
@@ -36,13 +32,9 @@ export default function Expore() {
           </DrawerTrigger>
 
           <DrawerContent>
-            {/* content */}
-
-            <DrawerClose />
+            <BookDetails />
           </DrawerContent>
         </Drawer>
-        <Book />
-        <Book />
       </BooksWrapper>
     </MainLayout>
   )

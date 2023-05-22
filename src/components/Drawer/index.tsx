@@ -1,11 +1,17 @@
 import React from 'react'
 import { VariantProps, CSS } from '@/styles/stitches.config'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { X } from 'phosphor-react'
 
-import { StyledCloseButton, StyledContent, StyledOverlay } from './styles'
+import {
+  StyledCloseButton,
+  StyledContent,
+  StyledOverlay,
+  StyledDrawerTrigger,
+} from './styles'
 
 const Drawer = DialogPrimitive.Root
-const DrawerTrigger = DialogPrimitive.Trigger
+const DrawerTrigger = StyledDrawerTrigger
 
 type DrawerContentVariants = VariantProps<typeof StyledContent>
 type DialogContentPrimitiveProps = React.ComponentProps<
@@ -24,23 +30,13 @@ const DrawerContent = React.forwardRef<
     <StyledContent {...props} ref={forwardedRef}>
       {children}
       <StyledCloseButton asChild>
-        <button>
-          <p>fechar</p>
-        </button>
+        <X size={24} color="#8D95AF" />
       </StyledCloseButton>
     </StyledContent>
   </DialogPrimitive.Portal>
 ))
 
-const DrawerClose = DialogPrimitive.Close
 const DrawerTitle = DialogPrimitive.Title
 const DrawerDescription = DialogPrimitive.Description
 
-export {
-  Drawer,
-  DrawerTrigger,
-  DrawerContent,
-  DrawerClose,
-  DrawerTitle,
-  DrawerDescription,
-}
+export { Drawer, DrawerTrigger, DrawerContent, DrawerTitle, DrawerDescription }

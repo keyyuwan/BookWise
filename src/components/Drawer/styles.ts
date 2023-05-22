@@ -12,7 +12,7 @@ const fadeOut = keyframes({
 })
 
 export const StyledOverlay = styled(DialogPrimitive.Overlay, {
-  backgroundColor: 'rgba(0, 0, 0, .15)',
+  backgroundColor: 'rgba(0, 0, 0, .6)',
   position: 'fixed',
   top: 0,
   right: 0,
@@ -39,21 +39,18 @@ const slideOut = keyframes({
 })
 
 export const StyledContent = styled(DialogPrimitive.Content, {
-  backgroundColor: '$panel',
+  backgroundColor: '$gray800',
   boxShadow:
     '$colors$shadowLight 0 0 38px -10px, $colors$shadowDark 0 0 35px -15px',
   position: 'fixed',
   top: 0,
   bottom: 0,
-  width: 250,
+  width: 660,
+  overflowY: 'auto',
 
   // Among other things, prevents text alignment inconsistencies when dialog can't be centered in the viewport evenly.
   // Affects animated and non-animated dialogs alike.
   willChange: 'transform',
-
-  // '&:focus': {
-  //   outline: 'none',
-  // },
 
   '&[data-state="open"]': {
     animation: `${slideIn} 150ms cubic-bezier(0.22, 1, 0.36, 1)`,
@@ -96,6 +93,12 @@ export const StyledContent = styled(DialogPrimitive.Content, {
 
 export const StyledCloseButton = styled(DialogPrimitive.Close, {
   position: 'absolute',
-  top: '$2',
-  right: '$2',
+  top: '$6',
+  right: 48,
+  cursor: 'pointer',
+})
+
+export const StyledDrawerTrigger = styled(DialogPrimitive.Trigger, {
+  all: 'unset',
+  cursor: 'pointer',
 })

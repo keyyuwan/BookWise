@@ -1,11 +1,9 @@
 import { styled } from '@/styles/stitches.config'
 
-export const BookContainer = styled('button', {
-  all: 'unset',
+export const BookContainer = styled('div', {
   padding: '$4 $5',
   backgroundColor: '$gray700',
   borderRadius: 8,
-  cursor: 'pointer',
   border: '2px solid transparent',
 
   position: 'relative',
