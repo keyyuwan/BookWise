@@ -1,4 +1,8 @@
+import { useState } from 'react'
+
 import { Avatar } from '@/components/Avatar'
+import { BookRatingForm } from './BookRatingForm'
+import { RatingButton } from './RatingButton'
 import {
   BookRating,
   BookRatingUser,
@@ -8,15 +12,32 @@ import {
 } from './styles'
 
 export function BookRatings() {
+  const [hasRatingForm, setHasRatingForm] = useState(false)
+
+  function handleShowRatingForm() {
+    setHasRatingForm(true)
+  }
+
+  function handleHideRatingForm() {
+    setHasRatingForm(false)
+  }
+
+  const isRatingFromUserAuth = false
+
   return (
     <BookRatingsContainer>
       <BookRatingsHeader>
         <span>Avaliações</span>
-        <button>Avaliar</button>
+
+        {!hasRatingForm && (
+          <RatingButton onShowRatingForm={handleShowRatingForm} />
+        )}
       </BookRatingsHeader>
 
       <BookRatingsWrapper>
-        <BookRating>
+        {hasRatingForm && <BookRatingForm onClose={handleHideRatingForm} />}
+
+        <BookRating isLight={isRatingFromUserAuth}>
           <div>
             <BookRatingUser>
               <Avatar

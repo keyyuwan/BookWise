@@ -15,13 +15,6 @@ export const BookRatingsHeader = styled('div', {
     fontSize: '$sm',
     color: '$gray200',
   },
-
-  button: {
-    all: 'unset',
-    color: '$purple100',
-    fontWeight: '$bold',
-    cursor: 'pointer',
-  },
 })
 
 export const BookRatingsWrapper = styled('div', {
@@ -34,7 +27,6 @@ export const BookRatingsWrapper = styled('div', {
 
 export const BookRating = styled('div', {
   padding: '$6',
-  backgroundColor: '$gray700',
   borderRadius: 8,
 
   '> div': {
@@ -48,6 +40,22 @@ export const BookRating = styled('div', {
     fontSize: '$sm',
     color: '$gray300',
     lineHeight: '$base',
+  },
+
+  variants: {
+    isLight: {
+      true: {
+        backgroundColor: '$gray600',
+      },
+
+      false: {
+        backgroundColor: '$gray700',
+      },
+    },
+  },
+
+  defaultVariants: {
+    isLight: false,
   },
 })
 
