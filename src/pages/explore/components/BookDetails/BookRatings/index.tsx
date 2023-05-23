@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Avatar } from '@/components/Avatar'
+import { RatingStars } from '@/components/RatingStars'
 import { BookRatingForm } from './BookRatingForm'
 import { RatingButton } from './RatingButton'
 import {
@@ -52,7 +53,7 @@ export function BookRatings() {
               </div>
             </BookRatingUser>
 
-            <span>avaliações</span>
+            <RatingStars value={4} readOnly />
           </div>
 
           <p>

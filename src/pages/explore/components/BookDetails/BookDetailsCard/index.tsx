@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { BookOpen, BookmarkSimple } from 'phosphor-react'
 
+import { RatingStars } from '@/components/RatingStars'
 import {
   BookData,
   BookDetailsCardContainer,
@@ -29,12 +30,10 @@ export function BookDetailsCard() {
           </BookInfoData>
 
           <BookInfoRating>
-            <p>estrerlas</p>
+            <RatingStars value={4} readOnly />
             <span>3 avaliações</span>
           </BookInfoRating>
         </div>
-
-        {/* <Rating rating={4} /> */}
       </BookInfo>
 
       <BookData>

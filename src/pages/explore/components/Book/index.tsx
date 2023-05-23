@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { Rating } from '@/components/Rating'
+import { RatingStars } from '@/components/RatingStars'
 import { BookContainer, BookContent, BookInfo, Read } from './styles'
 import bookImg from '@/images/books/Book.png'
 
@@ -28,7 +28,7 @@ export function Book({ isRead = false }: BookProps) {
             <span>George Orwell</span>
           </div>
 
-          <Rating rating={4} />
+          <RatingStars value={4} readOnly />
         </BookInfo>
       </BookContent>
     </BookContainer>

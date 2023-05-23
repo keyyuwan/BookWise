@@ -1,6 +1,7 @@
 import { Check, X } from 'phosphor-react'
 
 import { Avatar } from '@/components/Avatar'
+import { RatingStars } from '@/components/RatingStars'
 import {
   BookRatingFormContainer,
   BookRatingFormFooter,
@@ -16,12 +17,12 @@ export function BookRatingForm({ onClose }: BookRatingFormProps) {
   return (
     <BookRatingFormContainer>
       <BookRatingFormHeader>
-        <div>
+        <div className="user">
           <Avatar src="https://github.com/keyyuwan.png" alt="" size="medium" />
           <strong>Key Yu Wan</strong>
         </div>
 
-        <p>Estrelas</p>
+        <RatingStars value={4} />
       </BookRatingFormHeader>
 
       <BookRatingFormTextareaContainer>

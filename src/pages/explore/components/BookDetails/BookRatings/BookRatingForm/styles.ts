@@ -11,7 +11,7 @@ export const BookRatingFormHeader = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
 
-  div: {
+  'div.user': {
     display: 'flex',
     alignItems: 'center',
     gap: 16,

@@ -20,7 +20,7 @@ import {
 } from './styles'
 
 export default function Home() {
-  const isAuthenticated = false
+  const hasLastRead = false
 
   return (
     <MainLayout>
@@ -28,13 +28,13 @@ export default function Home() {
 
       <HomeContainer>
         <SectionWrapper>
-          {isAuthenticated && (
+          {hasLastRead && (
             <UserLastRead>
               <UserLastReadHeader>
                 <span>Sua última leitura</span>
 
                 <Link
-                  href="/profile"
+                  href="/profile/me"
                   title="Ver todas"
                   Icon={CaretRight}
                   size="small"

@@ -1,8 +1,7 @@
 import Image from 'next/legacy/image'
 
-import { Rating } from '@/components/Rating'
+import { RatingStars } from '@/components/RatingStars'
 import { LastReadCardContainer, LastReadContent, Wrapper } from './styles'
-
 import bookImg from '@/images/books/Book.png'
 
 export function LastReadCard() {
@@ -14,7 +13,7 @@ export function LastReadCard() {
         <Wrapper>
           <header>
             <time>Há 2 dias</time>
-            <Rating rating={4} />
+            <RatingStars value={4} readOnly />
           </header>
 
           <div>

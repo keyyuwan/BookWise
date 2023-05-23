@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 import { MainLayout } from '@/layouts/MainLayout'
 import { PageTitle } from '@/components/PageTitle'
 import { Search } from '@/components/Search'
-import { Rating } from '@/components/Rating'
+import { RatingStars } from '@/components/RatingStars'
 import { Avatar } from '@/components/Avatar'
 import { Link } from '@/components/Link'
 import {
@@ -100,7 +100,7 @@ export default function Profile() {
                         <span>{book.author}</span>
                       </div>
 
-                      <Rating rating={4} />
+                      <RatingStars value={4} readOnly />
                     </div>
                   </BookInfo>
 

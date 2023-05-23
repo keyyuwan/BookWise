@@ -1,8 +1,7 @@
 import Image from 'next/legacy/image'
 
-import { Rating } from '../Rating'
+import { RatingStars } from '../RatingStars'
 import { BookCardContainer, BookInfo } from './styles'
-
 import bookImg from '@/images/books/Book.png'
 
 export function BookCard() {
@@ -15,7 +14,7 @@ export function BookCard() {
           <span>George Orwell</span>
         </div>
 
-        <Rating rating={4} />
+        <RatingStars value={4} readOnly />
       </BookInfo>
     </BookCardContainer>
   )

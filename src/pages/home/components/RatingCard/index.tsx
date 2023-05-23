@@ -1,7 +1,7 @@
 import Image from 'next/legacy/image'
 
 import { Avatar } from '@/components/Avatar'
-import { Rating } from '@/components/Rating'
+import { RatingStars } from '@/components/RatingStars'
 import {
   RatingCardContainer,
   RatingCardContent,
@@ -27,7 +27,7 @@ export function RatingCard() {
           </div>
         </RatingCardRater>
 
-        <Rating rating={4} />
+        <RatingStars value={4} readOnly />
       </RatingCardHeader>
 
       <RatingCardContent>
