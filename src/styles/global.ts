@@ -1,3 +1,4 @@
+import { nunito } from '@/pages/_app.page'
 import { globalCss } from './stitches.config'
 
 export const globalStyles = globalCss({
@@ -7,14 +8,14 @@ export const globalStyles = globalCss({
     boxSizing: 'border-box',
   },
 
+  html: {
+    fontFamily: nunito.style.fontFamily,
+  },
+
   body: {
     backgroundColor: '$gray800',
     color: '$gray100',
     '-webkit-font-smoothing': 'antialiased',
-  },
-
-  'body, input, textarea, button': {
-    font: '400 1rem Nunito, sans-serif',
   },
 
   button: {

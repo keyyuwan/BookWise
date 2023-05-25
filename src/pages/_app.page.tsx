@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 
 import { globalStyles } from '@/styles/global'
 
-const nunito = Nunito({
+export const nunito = Nunito({
   subsets: ['latin'],
 })
 
