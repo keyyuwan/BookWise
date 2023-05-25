@@ -20,7 +20,7 @@ import {
 } from './styles'
 
 export default function Home() {
-  const hasLastRead = false
+  const hasLastRead = true
 
   return (
     <MainLayout>
