@@ -1,162 +1,105 @@
-import {
-  BookOpen,
-  BookmarkSimple,
-  Books,
-  CaretLeft,
-  User,
-  UserList,
-} from 'phosphor-react'
-import Image from 'next/legacy/image'
+import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import ptBR from 'dayjs/locale/pt-br'
 
+import { UserDTO } from '@/dtos/user'
+import { api } from '@/lib/api'
 import { MainLayout } from '@/layouts/MainLayout'
-import { PageTitle } from '@/components/PageTitle'
-import { Search } from '@/components/Search'
-import { RatingStars } from '@/components/RatingStars'
-import { Avatar } from '@/components/Avatar'
-import { Link } from '@/components/Link'
-import {
-  BookInfo,
-  BookRatedCard,
-  BooksRated,
-  BooksSection,
-  ProfileContainer,
-  ProfileSection,
-  UserBooksData,
-  UserProfile,
-} from './styles'
+import { ProfileHeader } from './components/ProfileHeader'
+import { ProfileRatings } from './components/ProfileRatings'
+import { ProfileInfo } from './components/ProfileInfo'
+import { ProfileContainer } from './styles'
 
-import bookImg from '@/images/books/Book.png'
+dayjs.extend(relativeTime)
+dayjs.locale(ptBR)
 
-interface Book {
+export interface Rating {
   id: string
-  title: string
-  author: string
-  rating: number
+  rate: number
   description: string
   createdAt: string
+  book: {
+    author: string
+    name: string
+    coverUrl: string
+  }
 }
 
-const BOOKS: Book[] = [
-  {
-    id: '1',
-    title: 'Entendendo algoritmos',
-    author: 'Adtiya Bhargava',
-    rating: 4,
-    description:
-      'Tristique massa sed enim lacinia odio. Congue ut faucibus nunc vitae non. Nam feugiat vel morbi viverra vitae mi. Vitae fringilla ut et suspendisse enim suspendisse vitae. Leo non eget lacus sollicitudin tristique pretium quam. Mollis et luctus amet sed convallis varius massa sagittis.',
-    createdAt: '2023-03-24',
-  },
-  {
-    id: '2',
-    title: 'Entendendo algoritmos',
-    author: 'Adtiya Bhargava',
-    rating: 4,
-    description:
-      'Tristique massa sed enim lacinia odio. Congue ut faucibus nunc vitae non. Nam feugiat vel morbi viverra vitae mi. Vitae fringilla ut et suspendisse enim suspendisse vitae. Leo non eget lacus sollicitudin tristique pretium quam. Mollis et luctus amet sed convallis varius massa sagittis.',
-    createdAt: '2023-03-24',
-  },
-]
+export interface User {
+  name: string
+  avatarUrl: string
+  memberSince: string
+  metrics: {
+    pagesReadCount: number
+    booksRatedCount: number
+    authorsReadCount: number
+    mostReadCategory: string
+  }
+  ratings: Rating[]
+}
 
-export default function Profile() {
-  const isUserAuth = true
+interface ProfileProps {
+  user: User
+}
+
+export default function Profile({ user }: ProfileProps) {
+  const { data: session } = useSession()
   const router = useRouter()
 
   function handleGoBack() {
     router.back()
   }
 
+  const userId = String(router.query.id)
+
+  const isUserAuthProfile = userId === session?.user.id
+
+  console.log(user)
+
   return (
     <MainLayout>
-      {isUserAuth ? (
-        <PageTitle icon={<User size={32} weight="bold" />} title="Perfil" />
-      ) : (
-        <Link
-          isIconBeforeTitle
-          title="Voltar"
-          Icon={CaretLeft}
-          size="medium"
-          color="white"
-          onClick={handleGoBack}
-        />
-      )}
+      <ProfileHeader
+        isUserAuthProfile={isUserAuthProfile}
+        onGoBack={handleGoBack}
+      />
 
       <ProfileContainer>
-        <BooksSection>
-          <Search placeholder="Buscar livro avaliado" />
+        <ProfileRatings ratings={user.ratings} />
 
-          <BooksRated>
-            {BOOKS.map((book) => (
-              <div key={book.id}>
-                <time>{book.createdAt}</time>
-
-                <BookRatedCard>
-                  <BookInfo>
-                    <Image src={bookImg} alt="" width={98} height={124} />
-
-                    <div>
-                      <div>
-                        <strong>{book.title}</strong>
-                        <span>{book.author}</span>
-                      </div>
-
-                      <RatingStars value={4} readOnly />
-                    </div>
-                  </BookInfo>
-
-                  <p>{book.description}</p>
-                </BookRatedCard>
-              </div>
-            ))}
-          </BooksRated>
-        </BooksSection>
-
-        <ProfileSection>
-          <UserProfile>
-            <Avatar src="https://github.com/keyyuwan.png" alt="" size="large" />
-
-            <div>
-              <strong>Key Yu Wan</strong>
-              <span>membro desde 2019</span>
-            </div>
-          </UserProfile>
-
-          <UserBooksData>
-            <div>
-              <BookOpen />
-
-              <div>
-                <strong>3853</strong>
-                <span>Páginas lidas</span>
-              </div>
-            </div>
-            <div>
-              <Books />
-
-              <div>
-                <strong>10</strong>
-                <span>Livros avaliados</span>
-              </div>
-            </div>
-            <div>
-              <UserList />
-
-              <div>
-                <strong>8</strong>
-                <span>Autores lidos</span>
-              </div>
-            </div>
-            <div>
-              <BookmarkSimple />
-
-              <div>
-                <strong>Computação</strong>
-                <span>Categoria mais lida</span>
-              </div>
-            </div>
-          </UserBooksData>
-        </ProfileSection>
+        <ProfileInfo user={user} />
       </ProfileContainer>
     </MainLayout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const userId = String(ctx.params?.id)
+
+  try {
+    const { data } = await api.get<{ user: UserDTO }>(`/users/${userId}`)
+
+    const user: UserDTO = {
+      ...data.user,
+      memberSince: dayjs(data.user.memberSince).format('YYYY'),
+      ratings: data.user.ratings.map((rating) => {
+        return {
+          ...rating,
+          createdAt: dayjs(rating.createdAt).fromNow(),
+        }
+      }),
+    }
+
+    return {
+      props: {
+        user,
+      },
+    }
+  } catch {
+    return {
+      notFound: true,
+    }
+  }
 }

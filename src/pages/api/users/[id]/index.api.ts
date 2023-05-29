@@ -13,6 +13,7 @@ export default async function handler(
 
   const userId = String(req.query.id)
 
+  // gets user from prisma
   const prismaUser = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -38,12 +39,15 @@ export default async function handler(
     return res.status(404).send({ message: 'User not found' })
   }
 
+  // calculates pages read amount
   const pagesReadCount = prismaUser.ratings.reduce((acc, rating) => {
     return acc + rating.book.total_pages
   }, 0)
 
+  // gets books read amount
   const booksRatedCount = prismaUser.ratings.length
 
+  // gets an array of all authors read
   const authorsRead = prismaUser.ratings.reduce((acc, rating) => {
     if (!acc.includes(rating.book.author)) {
       acc.push(rating.book.author)
@@ -52,8 +56,10 @@ export default async function handler(
     return acc
   }, [] as string[])
 
+  // gets amount of authors read
   const authorsReadCount = authorsRead.length
 
+  // gets all categories read (includes repeated categories)
   const categoriesOnRatingsBooks = prismaUser.ratings.reduce((acc, rating) => {
     rating.book.categories.forEach((category) => {
       acc.push(category.category.name)
@@ -62,6 +68,7 @@ export default async function handler(
     return acc
   }, [] as string[])
 
+  // gets the most read category in the array of categories read
   const mostReadCategory = getMostFrequentStringInArray(
     categoriesOnRatingsBooks,
   )
@@ -76,6 +83,19 @@ export default async function handler(
       authorsReadCount,
       mostReadCategory,
     },
+    ratings: prismaUser.ratings.map((rating) => {
+      return {
+        id: rating.id,
+        rate: rating.rate,
+        description: rating.description,
+        createdAt: rating.created_at,
+        book: {
+          author: rating.book.author,
+          name: rating.book.name,
+          coverUrl: rating.book.cover_url,
+        },
+      }
+    }),
   }
 
   return res.send({

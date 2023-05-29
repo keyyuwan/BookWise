@@ -37,7 +37,11 @@ export function Sidebar() {
         <NavItem Icon={Binoculars} title="Explorar" href="/explore" />
 
         {isAuthenticated && (
-          <NavItem Icon={User} title="Perfil" href="/profile/me" />
+          <NavItem
+            Icon={User}
+            title="Perfil"
+            href={`/profile/${data?.user.id}`}
+          />
         )}
       </Navigation>
 
