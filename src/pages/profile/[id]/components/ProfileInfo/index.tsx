@@ -1,12 +1,12 @@
 import { BookOpen, BookmarkSimple, Books, UserList } from 'phosphor-react'
 
+import { UserDTO } from '@/dtos/user'
 import { Avatar } from '@/components/Avatar'
 import { InfoItem } from './InfoItem'
-import { User } from '../../index.page'
 import { ProfileInfoContainer, UserBooksData, UserProfile } from './styles'
 
 interface ProfileInfoProps {
-  user: User
+  user: UserDTO
 }
 
 export function ProfileInfo({ user }: ProfileInfoProps) {

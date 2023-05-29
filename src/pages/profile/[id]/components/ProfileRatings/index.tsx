@@ -1,59 +1,23 @@
-import Image from 'next/image'
-
-import { Search } from '@/components/Search'
-import { RatingStars } from '@/components/RatingStars'
 import { EmptyRatings } from '../EmptyRatings'
+import { ProfileRating } from './ProfileRating'
 import { Rating } from '../../index.page'
-import {
-  BookInfo,
-  BookRated,
-  BookRatedCard,
-  BooksRated,
-  ProfileRatingsContainer,
-} from './styles'
+import { BooksRated, ProfileRatingsContainer } from './styles'
 
 interface ProfileRatingsProps {
   ratings: Rating[]
+  userId: string
 }
 
-export function ProfileRatings({ ratings }: ProfileRatingsProps) {
+export function ProfileRatings({ ratings, userId }: ProfileRatingsProps) {
   if (ratings.length === 0) {
     return <EmptyRatings />
   }
 
   return (
     <ProfileRatingsContainer>
-      <Search placeholder="Buscar livro avaliado" />
-
       <BooksRated>
         {ratings.map((rating) => {
-          return (
-            <BookRated key={rating.id}>
-              <time>{rating.createdAt}</time>
-
-              <BookRatedCard>
-                <BookInfo>
-                  <Image
-                    src={rating.book.coverUrl}
-                    alt=""
-                    width={98}
-                    height={124}
-                  />
-
-                  <div>
-                    <div>
-                      <strong>{rating.book.name}</strong>
-                      <span>{rating.book.author}</span>
-                    </div>
-
-                    <RatingStars value={rating.rate} readOnly />
-                  </div>
-                </BookInfo>
-
-                <p>{rating.description}</p>
-              </BookRatedCard>
-            </BookRated>
-          )
+          return <ProfileRating key={rating.id} rating={rating} />
         })}
       </BooksRated>
     </ProfileRatingsContainer>

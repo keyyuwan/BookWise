@@ -12,6 +12,8 @@ export default async function handler(
   }
 
   const userId = String(req.query.id)
+  const { q } = req.query
+  const query = q ?? ''
 
   // gets user from prisma
   const prismaUser = await prisma.user.findUnique({
@@ -20,6 +22,18 @@ export default async function handler(
     },
     include: {
       ratings: {
+        orderBy: {
+          created_at: 'desc',
+        },
+
+        where: {
+          book: {
+            name: {
+              contains: String(query),
+            },
+          },
+        },
+
         include: {
           book: {
             include: {
@@ -73,29 +87,33 @@ export default async function handler(
     categoriesOnRatingsBooks,
   )
 
+  const metrics = {
+    pagesReadCount,
+    booksRatedCount,
+    authorsReadCount,
+    mostReadCategory,
+  }
+
+  const ratings = prismaUser.ratings.map((rating) => {
+    return {
+      id: rating.id,
+      rate: rating.rate,
+      description: rating.description,
+      createdAt: rating.created_at,
+      book: {
+        author: rating.book.author,
+        name: rating.book.name,
+        coverUrl: rating.book.cover_url,
+      },
+    }
+  })
+
   const user = {
     name: prismaUser.name,
     avatarUrl: prismaUser.avatar_url,
     memberSince: prismaUser.created_at,
-    metrics: {
-      pagesReadCount,
-      booksRatedCount,
-      authorsReadCount,
-      mostReadCategory,
-    },
-    ratings: prismaUser.ratings.map((rating) => {
-      return {
-        id: rating.id,
-        rate: rating.rate,
-        description: rating.description,
-        createdAt: rating.created_at,
-        book: {
-          author: rating.book.author,
-          name: rating.book.name,
-          coverUrl: rating.book.cover_url,
-        },
-      }
-    }),
+    metrics,
+    ratings,
   }
 
   return res.send({
