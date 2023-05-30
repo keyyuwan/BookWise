@@ -14,6 +14,7 @@ import { Search } from '@/components/Search'
 import { ProfileHeader } from './components/ProfileHeader'
 import { ProfileRatings } from './components/ProfileRatings'
 import { ProfileInfo } from './components/ProfileInfo'
+import { EmptyRatings } from './components/EmptyRatings'
 import { ProfileContainer } from './styles'
 
 dayjs.extend(relativeTime)
@@ -95,6 +96,8 @@ export default function Profile() {
     refetch()
   }, [debouncedQuery, refetch])
 
+  const hasEmptyRatings = user?.ratings.length === 0
+
   return (
     <MainLayout>
       <ProfileHeader
@@ -103,21 +106,23 @@ export default function Profile() {
       />
 
       <ProfileContainer>
-        <div>
-          <Search
-            placeholder="Buscar livro avaliado"
-            value={query || ''}
-            onChange={(event) => setQuery(event.target.value)}
-          />
+        {hasEmptyRatings ? (
+          <EmptyRatings />
+        ) : (
+          <div>
+            <Search
+              placeholder="Buscar livro avaliado"
+              value={query || ''}
+              onChange={(event) => setQuery(event.target.value)}
+            />
 
-          {isLoading ? (
-            <p>Carregando</p>
-          ) : (
-            <ProfileRatings ratings={user!.ratings} userId={userId} />
-          )}
-        </div>
+            {isLoading ? null : (
+              <ProfileRatings ratings={user!.ratings} userId={userId} />
+            )}
+          </div>
+        )}
 
-        {isLoading ? <p>Carregando</p> : <ProfileInfo user={user!} />}
+        {isLoading ? null : <ProfileInfo user={user!} />}
       </ProfileContainer>
     </MainLayout>
   )

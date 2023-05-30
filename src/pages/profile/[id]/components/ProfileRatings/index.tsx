@@ -1,4 +1,3 @@
-import { EmptyRatings } from '../EmptyRatings'
 import { ProfileRating } from './ProfileRating'
 import { Rating } from '../../index.page'
 import { BooksRated, ProfileRatingsContainer } from './styles'
@@ -9,10 +8,6 @@ interface ProfileRatingsProps {
 }
 
 export function ProfileRatings({ ratings, userId }: ProfileRatingsProps) {
-  if (ratings.length === 0) {
-    return <EmptyRatings />
-  }
-
   return (
     <ProfileRatingsContainer>
       <BooksRated>
