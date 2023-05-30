@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import ptBR from 'dayjs/locale/pt-br'
-import { useQuery } from '@tanstack/react-query'
 
-import { UserDTO } from '@/dtos/user'
-import { api } from '@/lib/api'
 import { MainLayout } from '@/layouts/MainLayout'
 import { useDebounce } from '@/hooks/useDebounce'
 import { Search } from '@/components/Search'
@@ -16,9 +10,7 @@ import { ProfileRatings } from './components/ProfileRatings'
 import { ProfileInfo } from './components/ProfileInfo'
 import { EmptyRatings } from './components/EmptyRatings'
 import { ProfileContainer } from './styles'
-
-dayjs.extend(relativeTime)
-dayjs.locale(ptBR)
+import { useProfile } from '@/lib/hooks/useProfile'
 
 export interface Rating {
   id: string
@@ -59,38 +51,7 @@ export default function Profile() {
   const userId = String(router.query.id)
   const isUserAuthProfile = userId === session?.user.id
 
-  const {
-    data: user,
-    isLoading,
-    refetch,
-  } = useQuery(
-    ['profile', userId],
-    async () => {
-      const { data } = await api.get<{ user: UserDTO }>(`/users/${userId}`, {
-        params: {
-          q: query,
-        },
-      })
-
-      const user: UserDTO = {
-        ...data.user,
-        memberSince: dayjs(data.user.memberSince).format('YYYY'),
-        ratings: data.user.ratings.map((rating) => {
-          return {
-            ...rating,
-            createdAt: dayjs(rating.createdAt).fromNow(),
-          }
-        }),
-      }
-
-      return user
-    },
-    {
-      enabled: !!userId,
-      staleTime: 1000 * 60 * 60,
-      refetchOnWindowFocus: false,
-    },
-  )
+  const { data: user, isLoading, refetch } = useProfile(userId, query)
 
   useEffect(() => {
     refetch()
