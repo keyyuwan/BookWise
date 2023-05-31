@@ -6,6 +6,7 @@ import { BookDetails } from '../BookDetails'
 import { BookContainer, BookContent, BookInfo, Read } from './styles'
 
 interface IBook {
+  id: string
   name: string
   author: string
   coverUrl: string
@@ -46,7 +47,7 @@ export function Book({ book, isRead }: BookProps) {
       </DrawerTrigger>
 
       <DrawerContent>
-        <BookDetails />
+        <BookDetails bookId={book.id} />
       </DrawerContent>
     </Drawer>
   )

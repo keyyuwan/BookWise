@@ -38,8 +38,8 @@ export function Sidebar() {
         <NavItem
           Icon={Binoculars}
           title="Explorar"
-          href="/explore/books/all"
-          as="/explore"
+          href="/explore/books"
+          as="/explore/books/all"
           shouldMatchExactRef={false}
         />
 

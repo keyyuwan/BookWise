@@ -71,7 +71,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const categoryId = params?.categoryId
 
-  const booksResponse = await api.get(`/books/${categoryId}`)
+  const booksResponse = await api.get(`/books/categories/${categoryId}`)
   const { books } = booksResponse.data
 
   return {

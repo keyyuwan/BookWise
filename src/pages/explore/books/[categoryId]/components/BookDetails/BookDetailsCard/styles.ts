@@ -65,8 +65,18 @@ export const BookData = styled('div', {
       lineHeight: '$short',
     },
 
-    strong: {
+    'strong.total-pages': {
       color: '$gray200',
     },
+  },
+})
+
+export const CategoryText = styled('strong', {
+  '&::after': {
+    content: ', ',
+  },
+
+  '&:last-child::after': {
+    content: '""',
   },
 })

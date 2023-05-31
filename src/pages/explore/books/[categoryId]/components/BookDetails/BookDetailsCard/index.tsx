@@ -8,15 +8,35 @@ import {
   BookInfo,
   BookInfoData,
   BookInfoRating,
+  CategoryText,
 } from './styles'
-import bookImg from '@/images/books/Book.png'
 
-export function BookDetailsCard() {
+interface Category {
+  category: {
+    name: string
+  }
+}
+
+interface Book {
+  coverUrl: string
+  name: string
+  author: string
+  totalPages: number
+  averageRate: number
+  ratingsCount: number
+  categories: Category[]
+}
+
+interface BookDetailsCardProps {
+  book: Book
+}
+
+export function BookDetailsCard({ book }: BookDetailsCardProps) {
   return (
     <BookDetailsCardContainer>
       <BookInfo>
         <Image
-          src={bookImg}
+          src={book.coverUrl}
           alt=""
           width={172}
           height={242}
@@ -25,13 +45,16 @@ export function BookDetailsCard() {
 
         <div>
           <BookInfoData>
-            <strong>A revolução dos bichos</strong>
-            <span>George Orwell</span>
+            <strong>{book.name}</strong>
+            <span>{book.author}</span>
           </BookInfoData>
 
           <BookInfoRating>
-            <RatingStars value={4} readOnly />
-            <span>3 avaliações</span>
+            <RatingStars value={book.averageRate} readOnly />
+            <span>
+              {book.ratingsCount}{' '}
+              {book.ratingsCount === 1 ? 'avaliação' : 'avaliações'}
+            </span>
           </BookInfoRating>
         </div>
       </BookInfo>
@@ -41,7 +64,13 @@ export function BookDetailsCard() {
           <BookmarkSimple />
           <div>
             <span>Categoria</span>
-            <strong>Computação, educação</strong>
+            {book.categories.map((category) => {
+              return (
+                <CategoryText key={category.category.name}>
+                  {category.category.name}
+                </CategoryText>
+              )
+            })}
           </div>
         </div>
 
@@ -49,7 +78,7 @@ export function BookDetailsCard() {
           <BookOpen />
           <div>
             <span>Páginas</span>
-            <strong>160</strong>
+            <strong className="total-pages">{book.totalPages}</strong>
           </div>
         </div>
       </BookData>
