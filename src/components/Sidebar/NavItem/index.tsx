@@ -7,12 +7,29 @@ import { NavItemContainer } from './styles'
 interface NavItemProps extends LinkProps {
   Icon: Icon
   title: string
+  shouldMatchExactRef?: boolean
 }
 
-export function NavItem({ Icon, title, ...rest }: NavItemProps) {
-  const router = useRouter()
+export function NavItem({
+  Icon,
+  title,
+  shouldMatchExactRef = true,
+  ...rest
+}: NavItemProps) {
+  const { asPath } = useRouter()
 
-  const isActive = router.asPath === rest.href
+  let isActive = false
+
+  if (shouldMatchExactRef && (asPath === rest.href || asPath === rest.as)) {
+    isActive = true
+  }
+
+  if (
+    (!shouldMatchExactRef && asPath.startsWith(String(rest.href))) ||
+    asPath.startsWith(String(rest.as))
+  ) {
+    isActive = true
+  }
 
   return (
     <NavItemContainer isActive={isActive}>

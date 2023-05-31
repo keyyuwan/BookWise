@@ -34,7 +34,14 @@ export function Sidebar() {
 
       <Navigation>
         <NavItem Icon={ChartLineUp} title="Início" href="/" />
-        <NavItem Icon={Binoculars} title="Explorar" href="/explore" />
+
+        <NavItem
+          Icon={Binoculars}
+          title="Explorar"
+          href="/explore/books/all"
+          as="/explore"
+          shouldMatchExactRef={false}
+        />
 
         {isAuthenticated && (
           <NavItem

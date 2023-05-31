@@ -10,6 +10,7 @@ export const CategoriesWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '$3',
+  flexWrap: 'wrap',
 
   marginTop: 54,
 })
@@ -20,4 +21,5 @@ export const BooksWrapper = styled('div', {
   gap: '$5',
 
   marginTop: 48,
+  paddingBottom: '$4',
 })
