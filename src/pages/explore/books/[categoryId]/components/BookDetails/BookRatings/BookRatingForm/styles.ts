@@ -1,6 +1,6 @@
 import { styled } from '@/styles/stitches.config'
 
-export const BookRatingFormContainer = styled('div', {
+export const BookRatingFormContainer = styled('form', {
   backgroundColor: '$gray700',
   padding: '$6',
   borderRadius: 8,
@@ -75,4 +75,10 @@ export const BookRatingFormFooter = styled('div', {
       backgroundColor: '$gray500',
     },
   },
+})
+
+export const FormErrorMessage = styled('p', {
+  fontSize: '$sm',
+  color: 'red',
+  margin: '$1 0',
 })

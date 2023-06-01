@@ -19,11 +19,15 @@ export default async function handler(
 
     include: {
       ratings: {
+        orderBy: {
+          created_at: 'desc',
+        },
         include: {
           user: {
             select: {
               name: true,
               avatar_url: true,
+              id: true,
             },
           },
         },
@@ -54,6 +58,7 @@ export default async function handler(
       user: {
         name: rating.user.name,
         avatarUrl: rating.user.avatar_url,
+        id: rating.user.id,
       },
     }
   })

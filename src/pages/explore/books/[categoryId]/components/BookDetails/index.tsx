@@ -18,7 +18,7 @@ export function BookDetails({ bookId }: BookDetailsProps) {
     <BookDetailsContainer>
       <BookDetailsCard book={book!} />
 
-      <BookRatings ratings={book!.ratings} />
+      <BookRatings ratings={book!.ratings} bookId={book!.id} />
     </BookDetailsContainer>
   )
 }

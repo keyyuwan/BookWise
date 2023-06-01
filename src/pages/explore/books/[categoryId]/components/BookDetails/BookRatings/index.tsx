@@ -27,9 +27,10 @@ interface Rating {
 
 interface BookRatingsProps {
   ratings: Rating[]
+  bookId: string
 }
 
-export function BookRatings({ ratings }: BookRatingsProps) {
+export function BookRatings({ ratings, bookId }: BookRatingsProps) {
   const { data: session } = useSession()
 
   const [hasRatingForm, setHasRatingForm] = useState(false)
@@ -42,18 +43,24 @@ export function BookRatings({ ratings }: BookRatingsProps) {
     setHasRatingForm(false)
   }
 
+  const userAlreadyRated = ratings.some(
+    (rating) => rating.user.id === session?.user.id,
+  )
+
   return (
     <BookRatingsContainer>
       <BookRatingsHeader>
         <span>Avaliações</span>
 
-        {!hasRatingForm && (
+        {!hasRatingForm && !userAlreadyRated && (
           <RatingButton onShowRatingForm={handleShowRatingForm} />
         )}
       </BookRatingsHeader>
 
       <BookRatingsWrapper>
-        {hasRatingForm && <BookRatingForm onClose={handleHideRatingForm} />}
+        {hasRatingForm && (
+          <BookRatingForm onClose={handleHideRatingForm} bookId={bookId} />
+        )}
 
         {ratings.map((rating) => {
           return (
