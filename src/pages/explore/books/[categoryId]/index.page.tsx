@@ -18,7 +18,7 @@ interface ExporeProps {
   books: BookDTO[]
 }
 
-export default function Expore({ categories, books }: ExporeProps) {
+export default function Explore({ categories, books }: ExporeProps) {
   const { data: session } = useSession()
 
   function getReadState(book: BookDTO) {

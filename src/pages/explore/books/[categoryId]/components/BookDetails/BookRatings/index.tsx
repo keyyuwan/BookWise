@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 
 import { Avatar } from '@/components/Avatar'
 import { RatingStars } from '@/components/RatingStars'
@@ -12,7 +13,25 @@ import {
   BookRatingsWrapper,
 } from './styles'
 
-export function BookRatings() {
+interface Rating {
+  id: string
+  rate: number
+  createdAt: string
+  description: string
+  user: {
+    id: string
+    name: string
+    avatarUrl: string
+  }
+}
+
+interface BookRatingsProps {
+  ratings: Rating[]
+}
+
+export function BookRatings({ ratings }: BookRatingsProps) {
+  const { data: session } = useSession()
+
   const [hasRatingForm, setHasRatingForm] = useState(false)
 
   function handleShowRatingForm() {
@@ -22,8 +41,6 @@ export function BookRatings() {
   function handleHideRatingForm() {
     setHasRatingForm(false)
   }
-
-  const isRatingFromUserAuth = false
 
   return (
     <BookRatingsContainer>
@@ -38,30 +55,33 @@ export function BookRatings() {
       <BookRatingsWrapper>
         {hasRatingForm && <BookRatingForm onClose={handleHideRatingForm} />}
 
-        <BookRating isLight={isRatingFromUserAuth}>
-          <div>
-            <BookRatingUser>
-              <Avatar
-                src="https://github.com/keyyuwan.png"
-                alt=""
-                size="medium"
-              />
-
+        {ratings.map((rating) => {
+          return (
+            <BookRating
+              key={rating.id}
+              isLight={rating.user.id === session?.user.id}
+            >
               <div>
-                <strong>Key Yu Wan</strong>
-                <span>Há 2 dias</span>
+                <BookRatingUser>
+                  <Avatar
+                    src={rating.user.avatarUrl}
+                    alt={rating.user.name}
+                    size="medium"
+                  />
+
+                  <div>
+                    <strong>{rating.user.name}</strong>
+                    <span>{rating.createdAt}</span>
+                  </div>
+                </BookRatingUser>
+
+                <RatingStars value={rating.rate} readOnly />
               </div>
-            </BookRatingUser>
 
-            <RatingStars value={4} readOnly />
-          </div>
-
-          <p>
-            Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis.
-            Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit
-            porta eget nec vitae sit vulputate eget
-          </p>
-        </BookRating>
+              <p>{rating.description}</p>
+            </BookRating>
+          )
+        })}
       </BookRatingsWrapper>
     </BookRatingsContainer>
   )

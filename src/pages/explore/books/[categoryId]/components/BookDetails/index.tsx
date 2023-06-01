@@ -16,9 +16,9 @@ export function BookDetails({ bookId }: BookDetailsProps) {
 
   return (
     <BookDetailsContainer>
-      <BookDetailsCard book={book} />
+      <BookDetailsCard book={book!} />
 
-      <BookRatings />
+      <BookRatings ratings={book!.ratings} />
     </BookDetailsContainer>
   )
 }

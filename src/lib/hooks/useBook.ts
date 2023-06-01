@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../api'
+import { BookDTO } from '@/dtos/book'
+import { getDateDifferenceRelativeToNow } from '@/utils/get-date-difference-relative-to-now'
 
 async function getBook(id: string) {
   try {
@@ -7,14 +9,24 @@ async function getBook(id: string) {
 
     const { book } = response.data
 
-    return book
+    const formattedBook: BookDTO = {
+      ...book,
+      ratings: book.ratings.map((rating: any) => {
+        return {
+          ...rating,
+          createdAt: getDateDifferenceRelativeToNow(rating.createdAt),
+        }
+      }),
+    }
+
+    return formattedBook
   } catch (err) {
     console.log(err)
   }
 }
 
 export function useBook(id: string) {
-  return useQuery(['book', id], () => getBook(id), {
+  return useQuery<BookDTO | undefined>(['book', id], () => getBook(id), {
     enabled: !!id,
     staleTime: 1000 * 60 * 60, // 10 minutes
   })
