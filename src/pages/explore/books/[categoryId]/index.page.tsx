@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Binoculars } from 'phosphor-react'
 import { useSession } from 'next-auth/react'
@@ -5,13 +6,15 @@ import { useSession } from 'next-auth/react'
 import { CategoryDTO } from '@/dtos/category'
 import { BookDTO } from '@/dtos/book'
 import { api } from '@/lib/api'
+import { useBooks } from '@/lib/hooks/useBooks'
+import { useDebounce } from '@/hooks/useDebounce'
 import { MainLayout } from '@/layouts/MainLayout'
 import { PageTitle } from '@/components/PageTitle'
 import { Search } from '@/components/Search'
-import { Category } from './components/Category'
 import { Book } from './components/Book'
+import { Categories } from './components/Categories'
 
-import { BooksWrapper, CategoriesWrapper, ExploreHeader } from './styles'
+import { BooksWrapper, ExploreHeader, SearchText } from './styles'
 
 interface ExporeProps {
   categories: CategoryDTO[]
@@ -20,10 +23,20 @@ interface ExporeProps {
 
 export default function Explore({ categories, books }: ExporeProps) {
   const { data: session } = useSession()
+  const [query, setQuery] = useState<string | null>(null)
+  const debouncedQuery = useDebounce(query)
+
+  const { data: queriedBooks, refetch } = useBooks(debouncedQuery)
+
+  const booksToShow = debouncedQuery ? queriedBooks : books
 
   function getReadState(book: BookDTO) {
     return book.ratings.some((rating) => rating.user.id === session?.user.id)
   }
+
+  useEffect(() => {
+    refetch()
+  }, [debouncedQuery, refetch])
 
   return (
     <MainLayout>
@@ -32,25 +45,21 @@ export default function Explore({ categories, books }: ExporeProps) {
           icon={<Binoculars size={32} weight="bold" />}
           title="Explorar"
         />
-        <Search placeholder="Buscar livro ou autor" />
+        <Search
+          placeholder="Buscar livro ou autor"
+          value={query || ''}
+          onChange={(event) => setQuery(event.target.value)}
+        />
       </ExploreHeader>
 
-      <CategoriesWrapper>
-        <Category name="Tudo" href="/explore/books/all" />
-
-        {categories.map((category) => {
-          return (
-            <Category
-              key={category.id}
-              name={category.name}
-              href={`/explore/books/${category.id}`}
-            />
-          )
-        })}
-      </CategoriesWrapper>
+      {debouncedQuery ? (
+        <SearchText>Busca por: {query}</SearchText>
+      ) : (
+        <Categories categories={categories} />
+      )}
 
       <BooksWrapper>
-        {books.map((book) => {
+        {booksToShow?.map((book) => {
           return <Book key={book.id} book={book} isRead={getReadState(book)} />
         })}
       </BooksWrapper>

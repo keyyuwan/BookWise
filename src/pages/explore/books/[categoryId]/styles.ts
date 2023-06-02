@@ -6,15 +6,6 @@ export const ExploreHeader = styled('header', {
   justifyContent: 'space-between',
 })
 
-export const CategoriesWrapper = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$3',
-  flexWrap: 'wrap',
-
-  marginTop: 54,
-})
-
 export const BooksWrapper = styled('div', {
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
@@ -22,4 +13,10 @@ export const BooksWrapper = styled('div', {
 
   marginTop: 48,
   paddingBottom: '$4',
+})
+
+export const SearchText = styled('p', {
+  marginTop: 54,
+
+  fontSize: '$lg',
 })
