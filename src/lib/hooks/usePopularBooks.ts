@@ -2,13 +2,9 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from '../api'
 import { BookDTO } from '@/dtos/book'
 
-async function getBooks(query: string | null) {
+async function getPopularBooks() {
   try {
-    const response = await api.get('/books', {
-      params: {
-        q: query,
-      },
-    })
+    const response = await api.get('/books/popular')
 
     const { books } = response.data
 
@@ -18,12 +14,11 @@ async function getBooks(query: string | null) {
   }
 }
 
-export function useBooks(query: string | null) {
+export function usePopularBooks() {
   return useQuery<BookDTO[] | undefined>(
-    ['books', query],
-    () => getBooks(query),
+    ['books', 'popular'],
+    getPopularBooks,
     {
-      enabled: !!query,
       staleTime: 1000 * 60 * 60, // 10 minutes
     },
   )

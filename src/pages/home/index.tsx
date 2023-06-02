@@ -1,23 +1,11 @@
-import { CaretRight, ChartLineUp } from 'phosphor-react'
+import { ChartLineUp } from 'phosphor-react'
 
 import { MainLayout } from '@/layouts/MainLayout'
 import { PageTitle } from '@/components/PageTitle'
-import { BookCard } from '@/components/BookCard'
-import { Link } from '@/components/Link'
-import { RatingCard } from './components/RatingCard'
-import { LastReadCard } from './components/LastReadCard'
-import {
-  HomeContainer,
-  MostRecentRatings,
-  PopularBooks,
-  PopularBooksHeader,
-  PopularBooksList,
-  RatingsList,
-  SectionWrapper,
-  UserLastRead,
-  UserLastReadHeader,
-  UserLastReadList,
-} from './styles'
+import { PopularBooks } from './components/PopularBooks'
+import { UserLastRating } from './components/UserLastRating'
+import { RecentRatings } from './components/RecentRatings'
+import { HomeContainer, SectionWrapper } from './styles'
 
 export default function Home() {
   const hasLastRead = true
@@ -28,56 +16,12 @@ export default function Home() {
 
       <HomeContainer>
         <SectionWrapper>
-          {hasLastRead && (
-            <UserLastRead>
-              <UserLastReadHeader>
-                <span>Sua última leitura</span>
+          {hasLastRead && <UserLastRating />}
 
-                <Link
-                  href="/profile/me"
-                  title="Ver todas"
-                  Icon={CaretRight}
-                  size="small"
-                  color="purple"
-                />
-              </UserLastReadHeader>
-
-              <UserLastReadList>
-                <LastReadCard />
-              </UserLastReadList>
-            </UserLastRead>
-          )}
-
-          <MostRecentRatings>
-            <span>Avaliações mais recentes</span>
-
-            <RatingsList>
-              <RatingCard />
-              <RatingCard />
-              <RatingCard />
-            </RatingsList>
-          </MostRecentRatings>
+          <RecentRatings />
         </SectionWrapper>
 
-        <PopularBooks>
-          <PopularBooksHeader>
-            <span>Livros populares</span>
-
-            <Link
-              href="/explore"
-              title="Ver todos"
-              Icon={CaretRight}
-              size="small"
-              color="purple"
-            />
-          </PopularBooksHeader>
-
-          <PopularBooksList>
-            <BookCard />
-            <BookCard />
-            <BookCard />
-          </PopularBooksList>
-        </PopularBooks>
+        <PopularBooks />
       </HomeContainer>
     </MainLayout>
   )

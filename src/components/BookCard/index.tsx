@@ -2,19 +2,35 @@ import Image from 'next/legacy/image'
 
 import { RatingStars } from '../RatingStars'
 import { BookCardContainer, BookInfo } from './styles'
-import bookImg from '@/images/books/Book.png'
 
-export function BookCard() {
+interface Book {
+  coverUrl: string
+  name: string
+  author: string
+  averageRate: number
+}
+
+interface BookCardProps {
+  book: Book
+}
+
+export function BookCard({ book }: BookCardProps) {
   return (
     <BookCardContainer size="small">
-      <Image src={bookImg} alt="" width={64} height={94} objectFit="cover" />
+      <Image
+        src={book.coverUrl}
+        alt=""
+        width={64}
+        height={94}
+        objectFit="cover"
+      />
       <BookInfo>
         <div>
-          <strong>A revolução dos bichos</strong>
-          <span>George Orwell</span>
+          <strong>{book.name}</strong>
+          <span>{book.author}</span>
         </div>
 
-        <RatingStars value={4} readOnly />
+        <RatingStars value={book.averageRate} readOnly />
       </BookInfo>
     </BookCardContainer>
   )

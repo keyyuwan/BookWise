@@ -10,10 +10,6 @@ export const BookCardContainer = styled('div', {
   border: '2px solid transparent',
   transition: '.2s',
 
-  '&:hover': {
-    borderColor: '$gray600',
-  },
-
   img: {
     borderRadius: 4,
   },
