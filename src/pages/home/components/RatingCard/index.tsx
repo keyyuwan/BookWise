@@ -1,5 +1,6 @@
 import Image from 'next/legacy/image'
 
+import { RatingDTO } from '@/dtos/rating'
 import { Avatar } from '@/components/Avatar'
 import { RatingStars } from '@/components/RatingStars'
 import {
@@ -9,46 +10,44 @@ import {
   RatingCardRater,
 } from './styles'
 
-import bookImg from '@/images/books/Book.png'
+interface RatingCardProps {
+  rating: RatingDTO
+}
 
-export function RatingCard() {
-  const text =
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem libero, veritatis magnam illum exercitationem numquam, reiciendis quidem blanditiis assumenda dolore soluta tenetur. Inventore vitae sadecee wdefeww Rem liber cwcwcwc cww vwev vwwv iidciebehce eef veve. Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-
+export function RatingCard({ rating }: RatingCardProps) {
   return (
     <RatingCardContainer>
       <RatingCardHeader>
         <RatingCardRater>
-          <Avatar src="https://github.com/keyyuwan.png" alt="" size="medium" />
+          <Avatar
+            src={rating.user.avatarUrl}
+            alt={rating.user.name}
+            size="medium"
+          />
 
           <div>
-            <span>Key Yu Wan</span>
-            <time>Hoje</time>
+            <span>{rating.user.name}</span>
+            <time>{rating.createdAt}</time>
           </div>
         </RatingCardRater>
 
-        <RatingStars value={4} readOnly />
+        <RatingStars value={rating.rate} readOnly />
       </RatingCardHeader>
 
       <RatingCardContent>
         <Image
-          src={bookImg}
-          alt=""
+          src={rating.book.coverUrl}
+          alt={rating.book.name}
           width={108}
           height={152}
           objectFit="cover"
         />
 
         <div>
-          <strong>Revolução dos bichos</strong>
-          <span>J.R.R Tolkien</span>
+          <strong>{rating.book.name}</strong>
+          <span>{rating.book.author}</span>
 
-          <p>{text}</p>
-          {/* {isTextOverflow && (
-            <button onClick={handleSetFullTextVisible}>
-              {isFullTextVisible ? 'ver menos' : 'ver mais'}
-            </button>
-          )} */}
+          <p>{rating.description}</p>
         </div>
       </RatingCardContent>
     </RatingCardContainer>

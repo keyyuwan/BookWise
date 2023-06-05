@@ -7,8 +7,13 @@ import { PopularBooks } from './components/PopularBooks'
 import { UserLastRating } from './components/UserLastRating'
 import { RecentRatings } from './components/RecentRatings'
 import { HomeContainer, SectionWrapper } from './styles'
+import { RatingDTO } from '@/dtos/rating'
 
-export default function Home() {
+interface HomeProps {
+  recentRatings: RatingDTO[]
+}
+
+export default function Home({ recentRatings }: HomeProps) {
   const { data: userLastRating, isLoading: isLoadingUserLastRating } =
     useUserLastRating()
 
@@ -25,7 +30,9 @@ export default function Home() {
             <UserLastRating rating={userLastRating} />
           )}
 
-          <RecentRatings />
+          {recentRatings.length > 0 && (
+            <RecentRatings recentRatings={recentRatings} />
+          )}
         </SectionWrapper>
 
         <PopularBooks />

@@ -1,4 +1,5 @@
 export interface RatingDTO {
+  id: string
   rate: number
   description: string
   createdAt: string
@@ -6,5 +7,9 @@ export interface RatingDTO {
     coverUrl: string
     name: string
     author: string
+  }
+  user: {
+    avatarUrl: string
+    name: string
   }
 }
