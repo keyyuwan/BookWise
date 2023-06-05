@@ -1,33 +1,38 @@
 import Image from 'next/legacy/image'
 
 import { RatingStars } from '@/components/RatingStars'
+import { IUserLastRating } from '../UserLastRating'
 import { LastReadCardContainer, LastReadContent, Wrapper } from './styles'
-import bookImg from '@/images/books/Book.png'
 
-export function LastReadCard() {
+interface LastReadCardProps {
+  rating: IUserLastRating
+}
+
+export function LastReadCard({ rating }: LastReadCardProps) {
   return (
     <LastReadCardContainer>
-      <Image src={bookImg} alt="" width={108} height={152} objectFit="cover" />
+      <Image
+        src={rating.book.coverUrl}
+        alt=""
+        width={108}
+        height={152}
+        objectFit="cover"
+      />
 
       <LastReadContent>
         <Wrapper>
           <header>
-            <time>Há 2 dias</time>
-            <RatingStars value={4} readOnly />
+            <time>{rating.createdAt}</time>
+            <RatingStars value={rating.rate} readOnly />
           </header>
 
           <div>
-            <strong>Entendendo Algoritmos</strong>
-            <span>Aditya Bhargava</span>
+            <strong>{rating.book.name}</strong>
+            <span>{rating.book.author}</span>
           </div>
         </Wrapper>
 
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est
-          repellendus eos illum similique beatae consequatur repellat a, soluta
-          sit exercitationem earum, facilis eveniet corporis expedita ad impedit
-          quisquam voluptate minus.
-        </p>
+        <p>{rating.description}</p>
       </LastReadContent>
     </LastReadCardContainer>
   )
