@@ -3,5 +3,7 @@
     "next/core-web-vitals",
     "@rocketseat/eslint-config/react"
   ],
-  "no-unused-vars": "off"
+  "rules": {
+    "no-unused-vars": "off"
+  }
 }
